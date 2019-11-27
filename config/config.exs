@@ -20,6 +20,22 @@ config :shoehorn,
   init: [:nerves_runtime, :nerves_init_gadget],
   app: Mix.Project.config()[:app]
 
+config :nerves_init_gadget,
+  mdns_domain: "nerves.local",
+  node_name: node_name,
+  node_host: :mdns_domain,
+  ifname: "wlan0",
+  address_method: :dhcp
+
+key_mgmt = System.get_env("NERVES_NETWORK_KEY_MGMT") || "WPA-PSK"
+
+config :nerves_network, :default,
+  wlan0: [
+    ssid: System.get_env("NERVES_NETWORK_SSID"),
+    psk: System.get_env("NERVES_NETWORK_PSK"),
+    key_mgmt: String.to_atom(key_mgmt)
+  ]
+
 # Use Ringlogger as the logger backend and remove :console.
 # See https://hexdocs.pm/ring_logger/readme.html for more information on
 # configuring ring_logger.
