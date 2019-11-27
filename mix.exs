@@ -43,9 +43,11 @@ defmodule Carprs.MixProject do
       {:shoehorn, "~> 0.6"},
       {:ring_logger, "~> 0.6"},
       {:toolshed, "~> 0.2"},
+      {:nerves_firmware_ssh, "~> 0.3"},
 
       # Dependencies for all targets except :host
-      {:nerves_runtime, "~> 0.6", targets: @all_targets},
+#      {:nerves_runtime, "~> 0.6", targets: @all_targets},
+      {:nerves_runtime, "~> 0.6"},
       {:nerves_init_gadget, "~> 0.4", targets: @all_targets},
 
       # Dependencies for specific targets
