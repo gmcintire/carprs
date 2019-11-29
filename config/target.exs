@@ -4,7 +4,16 @@ use Mix.Config
 # See https://hexdocs.pm/nerves_firmware_ssh/readme.html for more information
 # on configuring nerves_firmware_ssh.
 
-keys =
+key_mgmt = System.get_env("NERVES_NETWORK_KEY_MGMT") || "WPA-PSK"
+
+config :nerves_network, :default,
+  wlan0: [
+    ssid: System.get_env("NERVES_NETWORK_SSID"),
+    psk: System.get_env("NERVES_NETWORK_PSK"),
+    key_mgmt: String.to_atom(key_mgmt)
+  ]
+
+  keys =
   [
     Path.join([System.user_home!(), ".ssh", "id_rsa.pub"]),
     Path.join([System.user_home!(), ".ssh", "id_ecdsa.pub"]),
@@ -31,14 +40,8 @@ config :nerves_firmware_ssh,
 node_name = if Mix.env() != :prod, do: "carprs"
 
 config :nerves_init_gadget,
-  ifname: "usb0",
+  ifname: "wlan0",
   address_method: :dhcpd,
   mdns_domain: "nerves.local",
   node_name: node_name,
   node_host: :mdns_domain
-
-# Import target specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-# Uncomment to use target specific configurations
-
-# import_config "#{Mix.target()}.exs"

@@ -43,16 +43,16 @@ defmodule Carprs.MixProject do
       {:shoehorn, "~> 0.6"},
       {:ring_logger, "~> 0.6"},
       {:toolshed, "~> 0.2"},
-      {:nerves_firmware_ssh, "~> 0.3"},
       {:circuits_uart, "~> 1.3"},
       {:credo, "~> 1.1", only: [:dev, :test]},
-      {:nerves_time, "~> 0.3.0"},
       {:xgps, "~> 0.4.1"},
 
       # Dependencies for all targets except :host
       # {:nerves_runtime, "~> 0.6", targets: @all_targets},
-      {:nerves_runtime, "~> 0.6"},
+      {:nerves_runtime, "~> 0.6", targets: @all_targets},
+      {:nerves_time, "~> 0.3.0", targets: @all_targets},
       {:nerves_init_gadget, "~> 0.4", targets: @all_targets},
+      {:nerves_firmware_ssh, "~> 0.3", targets: @all_targets},
 
       # Dependencies for specific targets
       {:nerves_system_rpi, "~> 1.8", runtime: false, targets: :rpi},
