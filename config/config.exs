@@ -13,6 +13,8 @@ config :carprs, target: Mix.target()
 config :nerves, :firmware, rootfs_overlay: "rootfs_overlay"
 node_name = if Mix.env() != :prod, do: "carprs"
 
+config :xgps, port_to_start: {"ttyAMA0"}
+
 # Use shoehorn to start the main application. See the shoehorn
 # docs for separating out critical OTP applications such as those
 # involved with firmware updates.

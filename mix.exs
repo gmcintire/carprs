@@ -31,7 +31,7 @@ defmodule Carprs.MixProject do
   def application do
     [
       mod: {Carprs.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :xgps]
     ]
   end
 
@@ -44,9 +44,13 @@ defmodule Carprs.MixProject do
       {:ring_logger, "~> 0.6"},
       {:toolshed, "~> 0.2"},
       {:nerves_firmware_ssh, "~> 0.3"},
+      {:circuits_uart, "~> 1.3"},
+      {:credo, "~> 1.1", only: [:dev, :test]},
+      {:nerves_time, "~> 0.3.0"},
+      {:xgps, "~> 0.4.1"},
 
       # Dependencies for all targets except :host
-#      {:nerves_runtime, "~> 0.6", targets: @all_targets},
+      # {:nerves_runtime, "~> 0.6", targets: @all_targets},
       {:nerves_runtime, "~> 0.6"},
       {:nerves_init_gadget, "~> 0.4", targets: @all_targets},
 
