@@ -30,6 +30,24 @@ config :shoehorn,
 
 config :logger, backends: [RingLogger]
 
+key_mgmt = System.get_env("NERVES_NETWORK_KEY_MGMT") || "WPA-PSK"
+
+config :nerves_network, :default,
+  wlan0: [
+    networks: [
+      [
+        ssid: System.get_env("NERVES_NETWORK_SSID"),
+        psk: System.get_env("NERVES_NETWORK_PSK"),
+        key_mgmt: String.to_atom(key_mgmt),
+        # if your WiFi setup as hidden
+        scan_ssid: 1
+      ]
+    ]
+  ],
+  wlan0: [
+    ipv4_address_method: :dhcp
+  ]
+
 if Mix.target() != :host do
   import_config "target.exs"
 end

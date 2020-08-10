@@ -13,7 +13,7 @@ config :nerves_network, :default,
     key_mgmt: String.to_atom(key_mgmt)
   ]
 
-  keys =
+keys =
   [
     Path.join([System.user_home!(), ".ssh", "id_rsa.pub"]),
     Path.join([System.user_home!(), ".ssh", "id_ecdsa.pub"]),
@@ -39,9 +39,12 @@ config :nerves_firmware_ssh,
 # Only enable this for prod if you understand the risks.
 node_name = if Mix.env() != :prod, do: "carprs"
 
-config :nerves_init_gadget,
-  ifname: "wlan0",
-  address_method: :dhcpd,
-  mdns_domain: "nerves.local",
-  node_name: node_name,
-  node_host: :mdns_domain
+config :nerves_network,
+  regulatory_domain: "US"
+
+# config :nerves_init_gadget,
+#   ifname: "wlan0",
+#   address_method: :dhcpd,
+#   mdns_domain: "nerves.local",
+#   node_name: node_name,
+#   node_host: :mdns_domain

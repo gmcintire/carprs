@@ -39,7 +39,7 @@ defmodule Carprs.MixProject do
   defp deps do
     [
       # Dependencies for all targets
-      {:nerves, "~> 1.5.0", runtime: false},
+      {:nerves, "~> 1.6.0", runtime: false},
       {:shoehorn, "~> 0.6"},
       {:ring_logger, "~> 0.6"},
       {:toolshed, "~> 0.2"},
@@ -50,9 +50,10 @@ defmodule Carprs.MixProject do
       # Dependencies for all targets except :host
       # {:nerves_runtime, "~> 0.6", targets: @all_targets},
       {:nerves_runtime, "~> 0.6", targets: @all_targets},
-      {:nerves_time, "~> 0.3.0", targets: @all_targets},
+      {:nerves_time, "~> 0.4.2", targets: @all_targets},
       {:nerves_init_gadget, "~> 0.4", targets: @all_targets},
       {:nerves_firmware_ssh, "~> 0.3", targets: @all_targets},
+      {:nerves_network, "~> 0.5", targets: @all_targets},
 
       # Dependencies for specific targets
       {:nerves_system_rpi, "~> 1.8", runtime: false, targets: :rpi},
@@ -62,7 +63,7 @@ defmodule Carprs.MixProject do
       {:nerves_system_rpi3a, "~> 1.8", runtime: false, targets: :rpi3a},
       {:nerves_system_rpi4, "~> 1.8", runtime: false, targets: :rpi4},
       {:nerves_system_bbb, "~> 2.3", runtime: false, targets: :bbb},
-      {:nerves_system_x86_64, "~> 1.8", runtime: false, targets: :x86_64},
+      {:nerves_system_x86_64, "~> 1.8", runtime: false, targets: :x86_64}
     ]
   end
 
