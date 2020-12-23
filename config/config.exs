@@ -3,7 +3,10 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-use Mix.Config
+import Config
+
+# Enable the Nerves integration with Mix
+Application.start(:nerves_bootstrap)
 
 config :carprs, target: Mix.target()
 
@@ -11,18 +14,11 @@ config :carprs, target: Mix.target()
 # https://hexdocs.pm/nerves/advanced-configuration.html for details.
 
 config :nerves, :firmware, rootfs_overlay: "rootfs_overlay"
-node_name = if Mix.env() != :prod, do: "carprs"
 
-# config :xgps, port_to_start: {"ttyAMA0"}
-config :xgps, port_to_start: {"cu.usbserial-310"}
+# Set the SOURCE_DATE_EPOCH date for reproducible builds.
+# See https://reproducible-builds.org/docs/source-date-epoch/ for more information
 
-# Use shoehorn to start the main application. See the shoehorn
-# docs for separating out critical OTP applications such as those
-# involved with firmware updates.
-
-config :shoehorn,
-  init: [:nerves_runtime, :nerves_init_gadget],
-  app: Mix.Project.config()[:app]
+config :nerves, source_date_epoch: "1608749163"
 
 # Use Ringlogger as the logger backend and remove :console.
 # See https://hexdocs.pm/ring_logger/readme.html for more information on
@@ -30,24 +26,8 @@ config :shoehorn,
 
 config :logger, backends: [RingLogger]
 
-key_mgmt = System.get_env("NERVES_NETWORK_KEY_MGMT") || "WPA-PSK"
-
-config :nerves_network, :default,
-  wlan0: [
-    networks: [
-      [
-        ssid: System.get_env("NERVES_NETWORK_SSID"),
-        psk: System.get_env("NERVES_NETWORK_PSK"),
-        key_mgmt: String.to_atom(key_mgmt),
-        # if your WiFi setup as hidden
-        scan_ssid: 1
-      ]
-    ]
-  ],
-  wlan0: [
-    ipv4_address_method: :dhcp
-  ]
-
-if Mix.target() != :host do
+if Mix.target() == :host or Mix.target() == :"" do
+  import_config "host.exs"
+else
   import_config "target.exs"
 end
